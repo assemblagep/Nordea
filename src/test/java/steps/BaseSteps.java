@@ -1,5 +1,8 @@
 package steps;
 
+import cucumber.api.PendingException;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -19,16 +22,19 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class BaseSteps {
-    MainPage mainPage;
+    private MainPage mainPage;
+    private WebDriver driver;
+
+    @Before
+    public void initDriver () {
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/win/chromedriver.exe");
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
 
     @Given("^Site \"([^\"]*)\"$")
     public void getUrl(String URL)  {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/win/chromedriver.exe");
-
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("http://" + URL);
-
         mainPage = new MainPage(driver);
     }
 
@@ -53,7 +59,7 @@ public class BaseSteps {
         List<Double> values = mainPage.getPriceList();
         List<Double> actual = new ArrayList(values);
         Collections.sort(values, Collections.reverseOrder());
-        assertThat(actual,equalTo(values));
+        assertThat(actual, equalTo(values));
     }
 
     @And("^Product \"([^\"]*)\" topic contains \"([^\"]*)\"$")
@@ -61,5 +67,10 @@ public class BaseSteps {
         // row numbers start from 0, check that one contains expected keyword
         String itemTopic = mainPage.getRowDetails(rowNumber);
         Assert.assertTrue(itemTopic.contains(expectedTopic.toUpperCase()));
+    }
+
+    @After
+    public void closeDriver() {
+        driver.quit();
     }
 }
