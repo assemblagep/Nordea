@@ -1,0 +1,4 @@
+This is Maven project with using Cucumber.
+The tests work with Chrome webdriver (Windows), chromedriver.exe included.
+
+Some items in result list have no price, so ones are ignored.
