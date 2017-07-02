@@ -1,6 +1,6 @@
 This is Maven project with using Cucumber.
 The tests work with Chrome webdriver (Windows), chromedriver.exe included.
-To start all the tests run CucumberAmazonTests class.
+To start all the tests run CucumberAmazonTest class.
 
 1. Some items in result list have no price, ones are ignored.
 2. Second product topic does not contain text “Nikon D3X” so test fails

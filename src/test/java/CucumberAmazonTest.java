@@ -4,6 +4,6 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = {"pretty"}, strict = false, features = {"src/test/resources/features"})
-public class CucumberAmazonTests {
+public class CucumberAmazonTest {
 
 }
